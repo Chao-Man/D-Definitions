@@ -1,0 +1,85 @@
+---
+  site: batoto
+  name: Batoto
+  language: en-us
+  links:
+    - http://bato.to/
+  
+  login:
+    path: /forums/index.php?app=core&module=global&section=login
+    form: form
+    inputs:
+      username: "{{ .Config.username }}"
+      password: "{{ .Config.password }}"
+
+    error:
+      - path: /forums/index.php?app=core&module=global&section=login
+
+    test:
+      path: /myfollows
+      selector: div#content>div>h3.maintitle
+      valid: "My Updates"
+      invalid: ""
+
+  index:
+    path: /search?&p={page}
+    title:
+      selector: table.ipb_table td:nth-of-type(1):not([colspan=6])
+      url:
+        selector: strong a
+        attribute: href
+    author:
+      selector: table.ipb_table td:nth-of-type(2):not([colspan=6])
+    rating:
+      selector: table.ipb_table td:nth-of-type(3):not([colspan=6])
+      attribute: title
+    views:
+      selector: table.ipb_table td:nth-of-type(4):not([colspan=6])
+    follows:
+      selector: table.ipb_table td:nth-of-type(5):not([colspan=6])
+    last_update:
+      selector: table.ipb_table td:nth-of-type(6):not([colspan=6])
+  
+  series:
+    alt_titles:
+      selector: div.ipsBox table.ipb_table td > span
+      # delim: 
+    authors:
+      selector: div.ipsBox tr:nth-of-type(2) a
+    artists:
+      selector: div.ipsBox tr:nth-of-type(3) a
+    genres:
+      selector: table.ipb_table a span
+    type:
+      selector: tr:contains('Type:') td:nth-of-type(2)
+    status:
+      selector: tr:contains('Status:') td:nth-of-type(2)
+    description:
+      selector: tr:contains('Description:') td:nth-of-type(2)
+    cover:
+      selector: div.ipsBox div > img
+    chapter:
+      name:
+        selector: tr.row:nth-of-type(n+2) td:nth-of-type(1) a
+      language:
+        selector: tr.row:nth-of-type(n+5) div
+        attribute: title
+      group:
+        selector: td:nth-of-type(3)
+      url:
+        selector: tr.row:nth-of-type(n+2) td:nth-of-type(1) a
+        attribute: href
+      
+    inject:
+      js: "$$('.chapter_row').invoke('show');$$('.chapter_row_expand').invoke('hide');"
+
+  reader:
+    pages:
+      url:
+        selector: div.moderation_bar:nth-of-type(1) select#page_select option
+        attribute: href
+      number:
+        selector: div.moderation_bar:nth-of-type(1) select#page_select option
+    image:
+      selector: div.clearfix div div div a img
+      attribute: src
