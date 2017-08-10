@@ -1,9 +1,7 @@
 ---
-  site: batoto
   name: Batoto
   language: en-us
-  links:
-    - http://bato.to/
+  root: http://bato.to/
   
   login:
     path: /forums/index.php?app=core&module=global&section=login
@@ -11,9 +9,6 @@
     inputs:
       username: "{{ .Config.username }}"
       password: "{{ .Config.password }}"
-
-    error:
-      - path: /forums/index.php?app=core&module=global&section=login
 
     test:
       path: /myfollows
@@ -23,21 +18,21 @@
 
   index:
     path: /search?&p={page}
-    title:
+    titles:
       selector: table.ipb_table td:nth-of-type(1):not([colspan=6])
       url:
         selector: strong a
         attribute: href
-    author:
+    authors:
       selector: table.ipb_table td:nth-of-type(2):not([colspan=6])
-    rating:
+    ratings:
       selector: table.ipb_table td:nth-of-type(3):not([colspan=6])
       attribute: title
     views:
       selector: table.ipb_table td:nth-of-type(4):not([colspan=6])
     follows:
       selector: table.ipb_table td:nth-of-type(5):not([colspan=6])
-    last_update:
+    last_updates:
       selector: table.ipb_table td:nth-of-type(6):not([colspan=6])
   
   series:
@@ -69,17 +64,13 @@
       url:
         selector: tr.row:nth-of-type(n+2) td:nth-of-type(1) a
         attribute: href
-      
-    inject:
-      js: "$$('.chapter_row').invoke('show');$$('.chapter_row_expand').invoke('hide');"
 
-  reader:
-    pages:
-      url:
-        selector: div.moderation_bar:nth-of-type(1) select#page_select option
-        attribute: href
-      number:
-        selector: div.moderation_bar:nth-of-type(1) select#page_select option
+  pages:
+    url:
+      selector: div.moderation_bar:nth-of-type(1) select#page_select option
+      attribute: href
+    number:
+      selector: div.moderation_bar:nth-of-type(1) select#page_select option
     image:
       selector: div.clearfix div div div a img
       attribute: src
